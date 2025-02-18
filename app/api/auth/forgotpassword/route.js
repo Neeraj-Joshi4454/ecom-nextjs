@@ -5,8 +5,6 @@ import { sendResetEmail } from "@/utils/nodemailer";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 
-
-connectToDatabase
 export async function POST(request, context){
     await connectToDatabase();
     const req = await request.json();
