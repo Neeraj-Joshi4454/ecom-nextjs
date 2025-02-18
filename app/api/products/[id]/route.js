@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/config/database';
 import Product from '@/models/productModel';
+import verifyToken from '@/utils/verfiyToken';
 
 export async function GET(request, { params }) {
+    const user = await verifyToken(request);
+    if (!user) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
     await connectToDatabase();
     const { id } = params;
 
@@ -19,6 +24,10 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+    const user = await verifyToken(request);
+    if (!user) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
     await connectToDatabase();
     const { id } = params;
     
@@ -37,6 +46,11 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+    const user = await verifyToken(request);
+    if (!user) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     await connectToDatabase();
     const { id } = params;
     

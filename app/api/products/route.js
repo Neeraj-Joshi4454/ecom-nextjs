@@ -3,8 +3,13 @@ import { connectToDatabase } from '@/config/database';
 import Product from '@/models/productModel';
 import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
+import verifyToken from '@/utils/verfiyToken';
 
 export async function POST(req) {
+    const user = await verifyToken(req);
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
   try {
     await connectToDatabase();
     
@@ -44,6 +49,10 @@ export async function POST(req) {
 
 export async function GET(req){
     try{
+        const user = await verifyToken(req);
+        if (!user) {
+        return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+        }
         await connectToDatabase();
         const allProducts = await Product.find();
         return NextResponse.json({success: true, data:allProducts}, {status: 200});

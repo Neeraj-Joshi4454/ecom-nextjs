@@ -2,8 +2,14 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/config/database";
 import Cart from "@/models/cartModel";
 import Product from "@/models/productModel";
+import verifyToken from "@/utils/verfiyToken";
 
 export async function GET(req) {
+    const user = await verifyToken(req);
+    if (!user) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     await connectToDatabase();
     
     const userId = req.headers.get("userId"); 

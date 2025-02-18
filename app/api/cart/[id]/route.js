@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/config/database";
 import Cart from "@/models/cartModel";
+import verifyToken from "@/utils/verfiyToken";
 
 export async function PUT(req, { params }) {
+    
+    const user = await verifyToken(req);
+    if (!user) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     await connectToDatabase();
     
     const { id } = params;
@@ -26,6 +33,11 @@ export async function PUT(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
+    const user = await verifyToken(req);
+    if (!user) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     await connectToDatabase();
     
     const { id } = params;
