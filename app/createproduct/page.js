@@ -19,9 +19,13 @@ export default function CreateProduct() {
     formData.append('price', price);
     formData.append('image', image);
 
+    const token = localStorage.getItem('auth_token')
     const response = await fetch('/api/products', {
       method: 'POST',
       body: formData,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
     });
 
     const result = await response.json();
