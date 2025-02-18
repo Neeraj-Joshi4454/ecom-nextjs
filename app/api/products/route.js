@@ -44,6 +44,7 @@ export async function POST(req) {
 
 export async function GET(req){
     try{
+        await connectToDatabase();
         const allProducts = await Product.find();
         return NextResponse.json({success: true, data:allProducts}, {status: 200});
     }catch(error){
