@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const Router = useRouter();
@@ -36,7 +37,7 @@ const LoginPage = () => {
           document.cookie = `user_role=${data.userRole}; path=/; max-age=3600`; 
           document.cookie = `user_id=${data.userId}; path=/; max-age=3600`;
     
-          alert('Login successful!');
+          toast.success("Login successfull")
           window.location.href = '/products';
         } else {
           setErrorMessage(data.message || 'Something went wrong.');

@@ -19,5 +19,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: [ '/cart', '/orders'],
+  matcher: [],
 };
