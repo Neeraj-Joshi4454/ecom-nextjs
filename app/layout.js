@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Provider } from "react-redux";
@@ -24,20 +24,20 @@ const geistMono = Geist_Mono({
 
 export default function RootLayout({ children }) {
   return (
-    <Provider store={store}>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-           <ToastContainer position="top-right" autoClose={3000} />
-          <Script
-            src="https://checkout.razorpay.com/v1/checkout.js"
-            strategy="beforeInteractive"
-            onLoad={() => console.log("Razorpay script loaded!")}
-          />
-          {children}
-        </body>
-      </html>
-     </Provider>
+    <html lang="en">
+      <head>
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+          onLoad={() => console.log("Razorpay script loaded!")}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ToastContainer position="top-right" autoClose={3000} />
+        <Provider store={store}>{children}</Provider>
+      </body>
+    </html>
   );
 }
