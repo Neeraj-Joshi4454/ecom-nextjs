@@ -217,8 +217,7 @@ function Page() {
           onClick={async () => {
             await setTotal(
               cart.items.reduce(
-                (acc, item) => acc + item.productId.price * item.quantity,
-                0
+                (acc, item) => acc + item.productId.price * item.quantity,0
               )
             );
             handlePayment(total);
