@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "@/redux/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,11 @@ export default function RootLayout({ children }) {
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
            <ToastContainer position="top-right" autoClose={3000} />
+          <Script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            strategy="beforeInteractive"
+            onLoad={() => console.log("Razorpay script loaded!")}
+          />
           {children}
         </body>
       </html>

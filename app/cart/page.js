@@ -1,11 +1,13 @@
 "use client";
 import { deleteCartItem, fetchCart, updateCartQuantity } from "@/redux/slices/cartSlice";
-import { useEffect } from "react";
+import handlePayment from "@/utils/handlePayment";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 export default function Page() {
   const dispatch = useDispatch();
+  const [total, setTotal] = useState(0);
   const { cart, loading, error } = useSelector((state) => state.cart);
 
   useEffect(() => {
@@ -42,6 +44,7 @@ export default function Page() {
     <div className="max-w-4xl mx-auto p-6">
       <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
       {cart?.items?.length > 0 ? (
+        
         <div className="space-y-4">
           {cart.items.map((item) => (
             <div key={item._id} className="flex justify-between items-center border p-4 rounded-lg">
@@ -80,6 +83,10 @@ export default function Page() {
       ) : (
         <p className="text-center text-gray-500">Your cart is empty.</p>
       )}
+
+      <button onClick={async () => {
+        await setTotal(cart.items.reduce((acc, item) => acc + item.productId.price * item.quantity, 0))
+        handlePayment(total)}}>checkout</button>
     </div>
   );
 }
