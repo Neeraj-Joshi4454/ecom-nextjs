@@ -33,6 +33,7 @@ const LoginPage = () => {
           localStorage.setItem('auth_token', data.token);
           localStorage.setItem('user_role', data.userRole);
           localStorage.setItem('user_id', data.userId);
+          localStorage.setItem('name', data.name);
           document.cookie = `auth_token=${data.token}; path=/; max-age=3600`;
           document.cookie = `user_role=${data.userRole}; path=/; max-age=3600`; 
           document.cookie = `user_id=${data.userId}; path=/; max-age=3600`;

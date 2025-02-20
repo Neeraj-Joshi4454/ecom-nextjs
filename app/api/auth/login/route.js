@@ -16,7 +16,7 @@ export async function POST (request, context){
     if(!isMatch) return NextResponse.json({message : "invalid credentials"}, {status: 403});
 
     const token = jwt.sign({id:user._id, role: user.role}, process.env.JWT_SECRET, {expiresIn: "1h"})
-    return NextResponse.json({token, userId : user._id, userRole:user.role})
+    return NextResponse.json({token, userId : user._id, userRole:user.role, name:`${user.first_name +" "+user.last_name}`})
 }
 
 // import { connectToDatabase } from "@/config/database";

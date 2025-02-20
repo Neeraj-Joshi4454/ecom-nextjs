@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const { amount } = await request.json(); 
+    console.log(amount)
 
     if (!amount || amount < 1) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
@@ -15,7 +16,7 @@ export async function POST(request) {
     });
 
     const order = await razorpay.orders.create({
-      amount: amount * 100, // Convert ₹ to paisa
+      amount: amount * 100,
       currency: "INR",
       receipt: `order_rcptid_${Date.now()}`,
     });
