@@ -38,7 +38,7 @@ import { Menu, X } from "lucide-react";
 import AvatarDropdown from "./AvatarDropdown";
 
 function CustomNavbar() {
-  const userName = localStorage.getItem('name')
+  // const userName = localStorage.getItem('name')
   const [role, setRole] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const Router = useRouter();
@@ -80,8 +80,8 @@ function CustomNavbar() {
 
         {/* Logout Button (Desktop) */}
         <div className="hidden md:block">
-          {/* <LogoutUser /> */}
-          <AvatarDropdown name={userName}/>
+          <LogoutUser />
+          {/* <AvatarDropdown name={userName}/> */}
         </div>
       </div>
 
@@ -105,8 +105,8 @@ function CustomNavbar() {
             )}
             {/* Logout Button (Mobile) */}
             <div className="mt-4">
-              {/* <LogoutUser /> */}
-              <AvatarDropdown name={userName}/>
+              <LogoutUser />
+              {/* <AvatarDropdown name={userName}/> */}
             </div>
           </ul>
         </div>
