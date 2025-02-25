@@ -10,7 +10,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
       throw new Error('No token found');
     }
   
-    const response = await fetch('/api/products', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.items = action.payload.data;
+        state.items = action.payload.products;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';

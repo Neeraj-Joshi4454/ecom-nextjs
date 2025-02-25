@@ -8,7 +8,7 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
   const token = localStorage.getItem('auth_token');
   const userId = localStorage.getItem('user_id')
   try {
-      const response = await fetch('/api/cart', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async ({ productId, 
   try {
     const userId = getLoggedInUserId(); 
 
-    const response = await fetch('/api/cart', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const updateCartQuantity = createAsyncThunk(
         const token = localStorage.getItem('auth_token');
         console.log('token for update quantity', token)
       try {
-        const response = await fetch(`/api/cart/${itemId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${itemId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export const updateCartQuantity = createAsyncThunk(
     async ({ itemId }, { rejectWithValue }) => {
         const token = localStorage.getItem('auth_token')
       try {
-        const response = await fetch(`/api/cart/${itemId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${itemId}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,

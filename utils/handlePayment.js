@@ -4,7 +4,7 @@ const handlePayment = async (amount) => {
       return;
     }
   
-    const res = await fetch("/api/razorpay", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/razorpay`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
