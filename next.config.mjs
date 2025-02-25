@@ -4,7 +4,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["demoesho01.s3.ap-south-1.amazonaws.com"],
+    domains: ["demoesho01.s3.ap-south-1.amazonaws.com","https://eshop-custom-backend.vercel.app"],
   },
 };
 
