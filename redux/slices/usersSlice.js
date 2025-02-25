@@ -2,7 +2,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   
     const token = localStorage.getItem('auth_token');
     
@@ -10,7 +10,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
       throw new Error('No token found');
     }
   
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -35,25 +35,25 @@ const initialState = {
   count : 0
 };
 
-const productSlice = createSlice({
-  name: 'products',
+const usersSlice = createSlice({
+  name: 'users',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchUsers.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(fetchUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.items = action.payload.products;
+        state.items = action.payload.users;
         state.count = action.payload.count;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
 
-export default productSlice.reducer;
+export default usersSlice.reducer;
