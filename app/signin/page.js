@@ -96,7 +96,7 @@ const LoginPage = () => {
             {formik.isSubmitting ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p className='text-blue-600 mt-3'>don&apos;t have account ? <span className='text-black cursor-pointer' onClick={() => Router.push('/signup')}>create</span></p>
+        <p className='text-blue-600 mt-3'>Don&apos;t have account ? <span className='text-black cursor-pointer' onClick={() => Router.push('/signup')}>create</span></p>
       </div>
     </div>
   );

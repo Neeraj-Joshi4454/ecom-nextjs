@@ -122,7 +122,7 @@ const RegisterPage = () => {
             {formik.isSubmitting ? 'processing...' : 'Signup'}
           </button>
         </form>
-        <p className='text-blue-600 mt-3'>already have account ? <span className='text-black cursor-pointer' onClick={() => Router.push('/signin')}>Signin</span></p>
+        <p className='text-blue-600 mt-3'>Already have account ? <span className='text-black cursor-pointer' onClick={() => Router.push('/signin')}>Signin</span></p>
       </div>
     </div>
   );
