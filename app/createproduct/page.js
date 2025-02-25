@@ -112,7 +112,7 @@ export default function Page() {
     formData.append("image", image);
 
     const token = localStorage.getItem("auth_token");
-    const response = await fetch("/api/products", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
       method: "POST",
       body: formData,
       headers: {

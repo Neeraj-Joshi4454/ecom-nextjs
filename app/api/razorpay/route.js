@@ -4,8 +4,6 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const { amount } = await request.json(); 
-    console.log(amount)
-
     if (!amount || amount < 1) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
     }
