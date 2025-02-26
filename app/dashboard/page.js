@@ -1,5 +1,5 @@
 "use client";
-import { fetchProducts } from "@/redux/slices/productSlice";
+import { deleteProduct, fetchProducts } from "@/redux/slices/productSlice";
 import { fetchUsers } from "@/redux/slices/usersSlice";
 import { useEffect, useState } from "react";
 import { FiBox, FiUsers, FiSettings, FiLogOut } from "react-icons/fi";
@@ -81,11 +81,11 @@ const AdminDashboard = () => {
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg">
               <h3 className="text-lg font-semibold">Total Orders</h3>
-              <p className="text-2xl font-bold">300</p>
+              <p className="text-2xl font-bold">2</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg">
               <h3 className="text-lg font-semibold">Revenue</h3>
-              <p className="text-2xl font-bold">₹1,20,000</p>
+              <p className="text-2xl font-bold">₹60,000</p>
             </div>
           </div>
         )}
@@ -94,11 +94,11 @@ const AdminDashboard = () => {
         {activeTab === "products" && (
           <div className="bg-white p-6 rounded-xl shadow-lg">
             <h2 className="text-xl font-bold mb-4">Product List</h2>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-4" onClick={() => setIsModalOpen(true)}>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-4" onClick={() => Router.push('/createproduct')}>
               Add Product
             </button>
-            <AddProductModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-            <table className="w-full text-left border-collapse">
+            {/* <AddProductModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> */}
+            <table className="w-full text-left border-collapse overflow-y-scroll h-[30vh]">
               <thead>
                 <tr className="bg-gray-200">
                   <th className="p-2">Image</th>
@@ -130,10 +130,12 @@ const AdminDashboard = () => {
                         ₹{product.price}
                       </td>
                       <td className="p-2 space-x-2">
-                        <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">
+                        <button onClick={() => {
+                          localStorage.setItem('product', JSON.stringify(product))
+                          Router.push(`/createproduct/${product._id}`)}}  className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">
                           Edit
                         </button>
-                        <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+                        <button onClick={() => {dispatch(deleteProduct(product._id))}} className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
                           Delete
                         </button>
                       </td>

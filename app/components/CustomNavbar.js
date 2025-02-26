@@ -39,11 +39,6 @@ function CustomNavbar() {
           <li className="hover:text-blue-600 cursor-pointer transition" onClick={() => Router.push("/orders")}>
             Orders
           </li>
-          {role === "admin" && (
-            <li className="hover:text-blue-600 cursor-pointer transition" onClick={() => Router.push("/createproduct")}>
-              Add Product
-            </li>
-          )}
         </ul>
 
         {/* Mobile Menu Button */}
@@ -76,11 +71,6 @@ function CustomNavbar() {
             <li className="hover:text-blue-600 cursor-pointer transition" onClick={() => { setIsOpen(false); Router.push("/orders"); }}>
               Orders
             </li>
-            {role === "admin" && (
-              <li className="hover:text-blue-600 cursor-pointer transition" onClick={() => { setIsOpen(false); Router.push("/createproduct"); }}>
-                Add Product
-              </li>
-            )}
             {/* Logout Button (Mobile) */}
             <div className="mt-4">
               <LogoutUser />

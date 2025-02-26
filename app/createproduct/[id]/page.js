@@ -1,98 +1,6 @@
-// "use client"
-
-// import { useState } from 'react';
-
-// export default function CreateProduct() {
-//   const [name, setName] = useState('');
-//   const [description, setDescription] = useState('');
-//   const [price, setPrice] = useState('');
-//   const [image, setImage] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-
-//     const formData = new FormData();
-//     formData.append('name', name);
-//     formData.append('description', description);
-//     formData.append('price', price);
-//     formData.append('image', image);
-
-//     const token = localStorage.getItem('auth_token')
-//     const response = await fetch('/api/products', {
-//       method: 'POST',
-//       body: formData,
-//       headers: {
-//         'Authorization': `Bearer ${token}`,
-//       },
-//     });
-
-//     const result = await response.json();
-
-//     if (result.success) {
-//       alert('Product created successfully!');
-//       setName('');
-//       setDescription('');
-//       setPrice('');
-//       setImage(null);
-//     } else {
-//       alert('Failed to create product: ' + result.error);
-//     }
-
-//     setLoading(false);
-//   };
-
-//   return (
-//     <div>
-//       <h1>Create Product</h1>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label>Name:</label>
-//           <input
-//             type="text"
-//             value={name}
-//             onChange={(e) => setName(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label>Description:</label>
-//           <textarea
-//             value={description}
-//             onChange={(e) => setDescription(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label>Price:</label>
-//           <input
-//             type="number"
-//             value={price}
-//             onChange={(e) => setPrice(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label>Image:</label>
-//           <input
-//             type="file"
-//             onChange={(e) => setImage(e.target.files[0])}
-//             required
-//           />
-//         </div>
-//         <button type="submit" disabled={loading}>
-//           {loading ? 'Creating...' : 'Create Product'}
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Page() {
@@ -115,14 +23,14 @@ export default function Page() {
     formData.append("image", image);
 
     const token = localStorage.getItem("auth_token");
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product`, {
-      method: "POST",
+    const prevProduct = JSON.parse(localStorage.getItem('product'));
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/${prevProduct._id}`, {
+      method: "PUT",
       body: formData,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
     const result = await response.json();
 
     if (result.success) {
@@ -140,11 +48,20 @@ export default function Page() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    const product = JSON.parse(localStorage.getItem('product'))
+    setName(product.name)
+    setDescription(product.description)
+    setCategory(product.category)
+    setPrice(product.price)
+  },[])
+
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg">
         <h1 className="text-2xl font-semibold text-gray-700 text-center mb-6">
-          Create Product
+          Edit Product
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name Field */}
@@ -194,7 +111,6 @@ export default function Page() {
             <input
               type="file"
               onChange={(e) => setImage(e.target.files[0])}
-              required
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>

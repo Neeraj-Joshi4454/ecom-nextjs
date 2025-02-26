@@ -7,7 +7,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
     const token = localStorage.getItem('auth_token');
     
     if (!token) {
-      throw new Error('No token found');
+      throw new Error('Please login first to access this page');
     }
   
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product`, {
@@ -23,9 +23,31 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
     }
   
     const data = await response.json();
-    console.log("data in async thunk:", data);
     return data;
   });
+
+
+export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productId) => {
+  const token = localStorage.getItem('auth_token');
+  if(!token){
+    throw new Error('Please login first to access this page');
+  }
+
+  const response = fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/${productId}`, {
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch products');
+  }
+
+  const data = await response.json();
+  return data;
+})
 
 
 const initialState = {
@@ -52,7 +74,19 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      });
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteProduct.fulfilled, (state) => {
+        state.status = 'succeeded';
+        state.items = action.payload.products;
+        state.count = action.payload.count;
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
   },
 });
 
