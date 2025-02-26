@@ -1,4 +1,7 @@
+import { toast } from "react-toastify";
+
 const handlePayment = async (amount) => {
+    const token = localStorage.getItem('auth_token');
     if (!amount || amount < 1) {
       alert("Enter a valid amount!");
       return;
@@ -8,6 +11,7 @@ const handlePayment = async (amount) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization" : `${token}`
       },
       body: JSON.stringify({ amount }),
     });
@@ -26,7 +30,7 @@ const handlePayment = async (amount) => {
       name: "Test Payment",
       order_id: id,
       handler: (response) => {
-        alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+        toast.success("Payment successful! Payment ID: " + response.razorpay_payment_id);
       },
       modal: {
         ondismiss: function () {

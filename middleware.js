@@ -2,8 +2,8 @@ import { jwtVerify } from 'jose';
 import { NextResponse } from 'next/server';
 
 export async function middleware(req) {
-  const tokenObj = req.cookies.get('auth_token'); // Get token object
-  const token = tokenObj?.value; // Extract value safely
+  const tokenObj = req.cookies.get('auth_token');
+  const token = tokenObj?.value;
 
   console.log('Extracted Token:', token);
 
@@ -15,7 +15,6 @@ export async function middleware(req) {
   }
 
   try {
-    // Decode and verify JWT using `jose`
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     await jwtVerify(token, secret);
 
